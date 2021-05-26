@@ -7,7 +7,9 @@ RUN apt-get update -y && \
     apt-get install -y \
     bash curl wget gnupg2 \
     debhelper build-essential git \
-    automake make gobjc++ libtool pkg-config libmspack-dev libglib2.0-dev libpam0g-dev libssl-dev libxml2-dev libxmlsec1-dev libx11-dev libxext-dev libxinerama-dev libxi-dev libxrender-dev libxrandr-dev libxtst-dev libgdk-pixbuf2.0-dev libgtk-3-dev libgtkmm-3.0-dev
+    automake make \
+    doxygen libcunit1-dev libfuse-dev libnotify-dev libprocps-dev libxss-dev libudev-dev libdrm-dev liblzma-dev \
+    gobjc++ libtool pkg-config libmspack-dev libglib2.0-dev libpam0g-dev libssl-dev libxml2-dev libxmlsec1-dev libx11-dev libxext-dev libxinerama-dev libxi-dev libxrender-dev libxrandr-dev libxtst-dev libgdk-pixbuf2.0-dev libgtk-3-dev libgtkmm-3.0-dev
 
 ARG ORIG_ARCHIVE_HASH=27f88f7f498b145f4bc94123e0e321de287776bc3991d42dd5554e63be459eb5
 ARG DEBIAN_ARCHIVE_HASH=c3d4a381e5267f5403ffdba3a03ad8fcdbd6560a1b29d52873f3280ae0773461
