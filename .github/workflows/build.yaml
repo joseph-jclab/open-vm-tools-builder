@@ -1,0 +1,28 @@
+name: build
+on: [push]
+jobs:
+  build:
+    runs-on: [self-hosted, linux, ARM64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Context for Buildx
+        id: buildx-context
+        run: docker context create builders
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          version: latest
+          endpoint: builders
+      - run: docker build --tag=temp .
+      - run: docker run -v $PWD/output:/mnt/output/ --rm temp sh -c "cp /work/*.deb /mnt/output/"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: built-packages
+          path: "$PWD/output/*"
+  publish:
+    needs: build
+    runs-on: [self-hosted, linux, AMD64]
+    steps:
+    - uses: actions/download-artifact@v2
+    - run: ls -al
