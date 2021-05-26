@@ -21,7 +21,7 @@ RUN mkdir -p /work && \
     tar --strip-components=1 -xf orig.tar.xz -C src && \
     tar --strip-components=1 -xf debian.tar.xz -C src/debian
 
-WORKDIR /work
+WORKDIR /work/src
 
 RUN dpkg-buildpackage --no-sign -b
 
