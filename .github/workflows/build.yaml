@@ -14,7 +14,18 @@ jobs:
         with:
           version: latest
           endpoint: builders
-      - run: docker build --tag=temp .
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path:  /tmp/.buildx-cache
+          key: ${{ runner.os }}-${{ runner.arch }}-buildx-${{ github.sha }}
+          restore-keys:
+            ${{ runner.os }}-${{ runner.arch }}-buildx-
+      - run: docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new --tag=temp .
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
       - run: docker run -v $PWD/output:/mnt/output/ --rm temp sh -c "cp /work/*.deb /mnt/output/"
       - uses: actions/upload-artifact@v2
         with:
