@@ -23,6 +23,8 @@ RUN mkdir -p /work && \
     tar --strip-components=1 -xf orig.tar.xz -C src && \
     tar --strip-components=1 -xf debian.tar.xz -C src/debian
 
+RUN sed -i 's/Architecture: amd64 i386/Architecture: amd64 i386 arm64/g' src/debian/control
+
 WORKDIR /work/src
 
 RUN dpkg-buildpackage --no-sign -b
